@@ -47,7 +47,7 @@ function closeSubscription(name) {
 
 
 function addFeedItem(data) {
-  $("#list").append("<li>" + data + "</li>")
+  $("#list").prepend("<li>" + data + "</li>")
 }
 
 
