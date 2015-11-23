@@ -23,7 +23,8 @@ function newSubscription(name) {
   var source = myFeeds[name].eventSource
 
   source.addEventListener('message', function(e) {
-    if (e.origin != 'http://localhost' && e.origin != 'http://156.35.95.69') {
+    //if (e.origin != 'http://localhost' && e.origin != 'http://156.35.95.69') {
+    if (e.origin != 'http://156.35.95.75' && e.origin != 'http://156.35.95.69') {
       alert('Danger! Origin ' + e.origin + ' unknown!')
       return
     }
