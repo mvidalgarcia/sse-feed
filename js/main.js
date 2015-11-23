@@ -24,23 +24,23 @@ function newSubscription(name) {
 
   source.addEventListener('message', function(e) {
     if (e.origin != 'http://localhost' && e.origin != 'http://156.35.95.69') {
-      alert('Danger! Origin ' + e.origin + ' unknown!');
+      alert('Danger! Origin ' + e.origin + ' unknown!')
       return
     }
-    console.log(e.data)
+    console.info("New alert from '" + name + "': " + e.data)
     addFeedItem(e.data)
   }, false)
-  console.info("New event subscription with '" + name + "' source.")
+  console.info("New alert subscription with '" + name + "' source.")
 }
 
 
 function closeSubscription(name) {
   if (myFeeds[name].eventSource) {
     myFeeds[name].eventSource.close()
-    console.info("Event source '" + name + "' was closed.")
+    console.info("Alert source '" + name + "' was closed.")
   }
   else {
-    console.info("Couldn't close event source '" + name + "' :(")
+    console.info("Couldn't close alert source '" + name + "' :(")
   }
 }
 
