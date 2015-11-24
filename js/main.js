@@ -34,7 +34,7 @@ function newSubscription(name) {
     addFeedItem(data)
     raiseNotification(data)
   }, false)
-  console.info("New alert subscription with '" + name + "' source.")
+  console.info("New alert subscription to '" + name + "' source.")
 }
 
 
@@ -69,7 +69,7 @@ function raiseNotification(data) {
         icon = "icons/red-alert.png"
         break
     }
-    
+
     var n = new Notification(data.source, {body: data.message, icon: icon})
     setTimeout(n.close.bind(n), 10000);
   }
