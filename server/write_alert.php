@@ -23,7 +23,7 @@ $alert = array(
   "timestamp" => time()
 );
 
-fwrite($file, json_encode($alert) . "\n");
+fwrite($file, json_encode($alert) . "\t" . time() . "\n");
 fclose($file);
 
 echo "New alert created: " . json_encode($alert);

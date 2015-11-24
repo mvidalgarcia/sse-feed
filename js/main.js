@@ -53,6 +53,7 @@ function addFeedItem(data) {
   $("#list").prepend("<li>" + JSON.stringify(data) + "</li>")
 }
 
+
 function raiseNotification(msg) {
   if (window.Notification && Notification.permission === "granted") {
     var n = new Notification(msg)

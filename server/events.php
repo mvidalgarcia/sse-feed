@@ -4,6 +4,7 @@ header("Content-Type: text/event-stream\n\n");
 header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
 
 $TIME_BETWEEN_EVENTS = 10; // in seconds
+$lastTsRead = -1;
 
 $arrayEvents = array(
   0 => array(
@@ -48,22 +49,28 @@ function sendMsg($time, $msg) {
   flush();
 }
 
-function alertsInFile() {
-  if($lines = file("alerts.txt")) {
-    $alert = $lines[0];
-    // Delete line read
-    unset($lines[0]);
-    file_put_contents("alerts.txt", $lines);
-    return trim($alert);
+function newAlertsInFile() {
+  global $lastTsRead;
+  if ($lines = file("alerts.txt")) {
+    $line = $lines[count($lines) - 1]; // last index, most recent
+    $lineArray = preg_split("/[\t]/", $line);
+    $alert = $lineArray[0];
+    $ts = $lineArray[1];
+    if ($lastTsRead < intval($ts)) {
+      $lastTsRead = intval($ts);
+      return $alert;
+    }
+    else // no new alerts
+      return false;
   }
-  else
+  else // no alerts in file
     return false;
 }
 
 function run() {
   global $arrayEvents, $TIME_BETWEEN_EVENTS;
-  while(1) {
-    if ($alert = alertsInFile()) {
+  while (1) {
+    if ($alert = newAlertsInFile()) {
       echo "data: " . $alert . PHP_EOL;
       echo PHP_EOL;
       ob_flush();
