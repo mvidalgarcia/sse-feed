@@ -4,7 +4,7 @@ header("Content-Type: text/event-stream\n\n");
 header('Cache-Control: no-cache'); // recommended to prevent caching of event data.
 
 $TIME_BETWEEN_EVENTS = 10; // in seconds
-$lastTsRead = -1;
+$lastTsRead = time();
 
 $arrayEvents = array(
   0 => array(

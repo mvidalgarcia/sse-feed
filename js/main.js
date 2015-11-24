@@ -32,7 +32,7 @@ function newSubscription(name) {
     var data = JSON.parse(e.data)
     console.info("New alert from '" + name + "': " + e.data)
     addFeedItem(data)
-    raiseNotification(data.message)
+    raiseNotification(data)
   }, false)
   console.info("New alert subscription with '" + name + "' source.")
 }
@@ -54,9 +54,23 @@ function addFeedItem(data) {
 }
 
 
-function raiseNotification(msg) {
+function raiseNotification(data) {
   if (window.Notification && Notification.permission === "granted") {
-    var n = new Notification(msg)
+
+    var icon;
+    switch (data.alertLevel) {
+      case "low":
+        icon = "icons/green-alert.png"
+        break
+      case "medium":
+        icon = "icons/yellow-alert.png"
+        break
+      case "high":
+        icon = "icons/red-alert.png"
+        break
+    }
+    
+    var n = new Notification(data.source, {body: data.message, icon: icon})
     setTimeout(n.close.bind(n), 10000);
   }
 }
